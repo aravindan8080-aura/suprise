@@ -42,18 +42,14 @@ export default function Letter({ to, letter, next }) {
                         {!done && <span className="bd-caret" />}
                     </div>
                 </div>
-                <button
-                    type="button"
-                    className={`bd-letter-next ${done ? 'is-on' : ''}`}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        next();
-                    }}
-                    aria-label="Continue"
-                >
-                    🎂
-                </button>
             </div>
+            {done ? (
+                <button type="button" className="bd-btn bd-letter-continue" onClick={next}>
+                    Continue <span className="bd-btn-emoji">✨</span>
+                </button>
+            ) : (
+                <p className="bd-hint bd-letter-skip">tap the letter to read it all at once</p>
+            )}
             {['✨', '✦', '✨', '✦'].map((s, i) => (
                 <span key={i} className="bd-letter-twinkle" style={{ '--i': i }}>{s}</span>
             ))}

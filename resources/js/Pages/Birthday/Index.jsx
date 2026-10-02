@@ -28,7 +28,11 @@ const SCENES = [
 const LEAVE_MS = 650;
 
 export default function BirthdayIndex(props) {
-    const [index, setIndex] = useState(0);
+    // ?scene=letter (etc.) jumps straight to a scene — handy for previewing edits.
+    const [index, setIndex] = useState(() => {
+        const s = new URLSearchParams(window.location.search).get('scene');
+        return Math.max(0, SCENES.findIndex((x) => x.key === s));
+    });
     const [leaving, setLeaving] = useState(false);
 
     const go = useCallback((to) => {

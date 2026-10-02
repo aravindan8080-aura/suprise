@@ -979,15 +979,19 @@ button {
    ========================================================================== */
 .bd-letter-scene {
     min-height: 100svh;
-    display: grid;
-    place-items: center;
-    padding: 70px 16px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 64px 16px 28px;
 }
 
 .bd-letter {
     position: relative;
     width: min(440px, 100%);
-    height: min(480px, 74svh);
+    height: min(480px, calc(100svh - 190px));
+    cursor: pointer;
     border-radius: 14px;
     border: 1.5px solid #e7b97a;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 40px), #fff6e6;
@@ -1001,7 +1005,7 @@ button {
 .bd-letter-scroll {
     height: 100%;
     overflow-y: auto;
-    padding: 34px 28px 70px;
+    padding: 34px 28px 30px;
     scrollbar-width: none;
     background: repeating-linear-gradient(180deg, transparent 0 29px, rgba(180, 140, 100, 0.2) 29px 30px) local;
 }
@@ -1040,22 +1044,8 @@ button {
     animation: bd-caret 0.8s steps(1) infinite;
 }
 
-.bd-letter-next {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-    width: 46px;
-    height: 46px;
-    border: 0;
-    border-radius: 50%;
-    font-size: 20px;
-    background: radial-gradient(circle at 35% 30%, #ffd27a, #f08a24);
-    box-shadow: 0 8px 20px -6px rgba(240, 138, 36, 0.8);
-    transform: scale(0);
-    transition: transform 0.5s var(--ease-spring);
-}
-
-.bd-letter-next.is-on { transform: scale(1); animation: bd-ready 1.6s ease-in-out 0.5s infinite; }
+.bd-letter-continue { flex-shrink: 0; animation: bd-rise-in 0.6s var(--ease-out) both, bd-ready 1.8s ease-in-out 0.6s infinite; }
+.bd-letter-skip { margin: 0; height: 56px; line-height: 56px; flex-shrink: 0; }
 
 .bd-letter-twinkle {
     position: fixed;
