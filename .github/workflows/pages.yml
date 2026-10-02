@@ -21,15 +21,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # npm install (not ci): the lockfile is generated on Windows, and
+      # npm ci on Linux can reject it over platform-specific optional deps.
+      - run: npm install --no-audit --no-fund
       - run: npm run build:static
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
