@@ -1,5 +1,4 @@
-import { Head } from '@inertiajs/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Backdrop from './lib/Backdrop';
 import SoundToggle from './lib/SoundToggle';
 import { clearFx } from './lib/fx';
@@ -45,12 +44,17 @@ export default function BirthdayIndex(props) {
     const next = useCallback(() => go(Math.min(index + 1, SCENES.length - 1)), [go, index]);
     const replay = useCallback(() => go(1), [go]);
 
+    // Plain document.title (not Inertia <Head>) so the same component also
+    // runs in the static GitHub Pages build.
+    useEffect(() => {
+        document.title = `🎁 For ${props.to} — a birthday surprise`;
+    }, [props.to]);
+
     const scene = SCENES[index];
     const Scene = scene.C;
 
     return (
         <>
-            <Head title={`🎁 For ${props.to} — a birthday surprise`} />
             <Backdrop light={scene.light} />
             <SoundToggle light={scene.light} />
             <main key={scene.key} className={`bd-scene bd-scene--${scene.key} ${scene.light ? 'is-light' : ''} ${leaving ? 'is-leaving' : ''}`}>

@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "build:static": "node scripts/build-static.mjs"
     },
     "devDependencies": {
         "@inertiajs/react": "^2.0.0",
