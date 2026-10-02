@@ -111,6 +111,7 @@
     right: 0;
     text-align: center;
     margin: 0;
+    padding: 0 64px;
     font-family: var(--f-head);
     font-size: 12px;
     font-weight: 600;
@@ -122,14 +123,16 @@
 .pr-tracker {
     position: absolute;
     bottom: 22px;
-    left: 50%;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: 0 auto;
     display: flex;
     gap: 6px;
     padding: 6px 10px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.6);
     box-shadow: 0 4px 14px rgba(160, 80, 90, 0.12);
-    transform: translateX(-50%);
 }
 
 .pr-track {
@@ -337,22 +340,23 @@
 
 .pr-door-sign {
     position: absolute;
-    top: 21%;
+    top: 15%;
     left: 50%;
     padding: 8px 14px;
     border-radius: 6px;
     background: #fff4ee;
     color: #4a1d2c;
     font-family: var(--f-hand);
-    font-size: 13px;
+    font-size: clamp(11px, 3.3vw, 13px);
     font-weight: 700;
     line-height: 1.3;
-    white-space: nowrap;
+    width: max-content;
+    max-width: 78%;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     transform: translateX(-50%) rotate(-3deg);
 }
 
-.pr-knocker { position: absolute; top: 44%; left: 50%; width: 70px; height: 80px; transform: translate(-50%, -50%); perspective: 300px; }
+.pr-knocker { position: absolute; top: 53%; left: 50%; width: 70px; height: 80px; transform: translate(-50%, -50%); perspective: 300px; }
 .pr-knocker::before { content: ''; position: absolute; top: 0; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffe08a, #c58a1c); z-index: 2; }
 .pr-knocker-ring {
     position: absolute;
@@ -381,7 +385,7 @@
 
 /* ------------------------------ 5 · gallery ---------------------------- */
 .pr-frame {
-    width: min(320px, 82vw);
+    width: clamp(190px, min(82vw, calc(100svh - 420px)), 320px);
     padding: 14px;
     background: linear-gradient(135deg, #b8862f, #f0cf7d 30%, #a8761f 60%, #e7c26a);
     box-shadow: 0 24px 40px -18px rgba(90, 50, 20, 0.6), inset 0 0 0 2px rgba(255, 255, 255, 0.25);
@@ -418,7 +422,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
-    width: min(320px, 86vw);
+    width: clamp(220px, min(86vw, calc(100svh - 300px)), 320px);
     aspect-ratio: 1;
     padding: 10px;
     border-radius: 16px;
@@ -677,8 +681,8 @@ li.is-ticked .pr-box svg { stroke-dashoffset: 0; }
 
 .pr-card {
     position: relative;
-    width: min(300px, 82vw);
-    aspect-ratio: 0.78;
+    /* Fit card + title + Save button on one phone screen. */
+    width: clamp(220px, min(82vw, calc((100svh - 290px) * 0.78)), 300px);
     padding: 16px;
     border-radius: 18px;
     overflow: hidden;
@@ -696,7 +700,8 @@ li.is-ticked .pr-box svg { stroke-dashoffset: 0; }
     align-items: center;
     justify-content: center;
     gap: 8px;
-    height: 100%;
+    min-height: 280px;
+    padding: 22px 8px;
     border: 1.5px dashed rgba(200, 80, 120, 0.4);
     border-radius: 12px;
 }

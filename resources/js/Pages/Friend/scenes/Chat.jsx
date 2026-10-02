@@ -37,7 +37,7 @@ export default function Chat({ to, from, chat, next }) {
         sfx.pop();
         setTimeout(() => {
             const r = listRef.current.getBoundingClientRect();
-            emojiBurst(r.right - 60, r.bottom - 40, ['🤗', '❤️', '🫂', '😂'], 24, 11);
+            emojiBurst(r.right - 60, r.bottom - 40, ['🤗', '❤️', '😂'], 24, 11);
             sfx.chime();
         }, 300);
         setTimeout(next, 1800);

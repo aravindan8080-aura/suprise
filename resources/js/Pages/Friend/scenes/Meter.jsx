@@ -86,7 +86,7 @@ export default function Meter({ to, next }) {
 
     return (
         <div className={`fr-meter-scene is-${phase}`}>
-            <h2 className="fr-title bd-rise" style={{ '--d': '0.1s' }}>Official friendship-o-meter 📟</h2>
+            <h2 className="fr-title bd-rise" style={{ '--d': '0.1s' }}>Official friendship‑o‑meter 📟</h2>
             <p className="fr-sub bd-rise" style={{ '--d': '0.25s' }}>Measuring how good a friend {to} really is…</p>
 
             <div className="fr-gauge bd-rise" style={{ '--d': '0.4s' }} ref={gaugeRef}>

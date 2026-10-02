@@ -40,15 +40,17 @@ function Foil({ onClear }) {
             c.arc(Math.random() * r.width, Math.random() * r.height, Math.random() * 1.6, 0, Math.PI * 2);
             c.fill();
         }
+        // Text scales with the frame so it fits small phones too.
+        const k = Math.min(1, r.width / 230);
         c.textAlign = 'center';
-        c.font = '28px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
-        c.fillText('👉', r.width / 2, r.height / 2 - 18);
+        c.font = `${28 * k}px "Segoe UI Emoji", "Apple Color Emoji", sans-serif`;
+        c.fillText('👉', r.width / 2, r.height / 2 - 18 * k);
         c.fillStyle = '#5A3A18';
-        c.font = '700 20px "Shantell Sans", cursive';
-        c.fillText('Scratch to see it', r.width / 2, r.height / 2 + 16);
-        c.font = '600 11px Fredoka, sans-serif';
+        c.font = `700 ${20 * k}px "Shantell Sans", cursive`;
+        c.fillText('Scratch to see it', r.width / 2, r.height / 2 + 16 * k);
+        c.font = `600 ${11 * k}px Fredoka, sans-serif`;
         c.fillStyle = 'rgba(90,58,24,.7)';
-        c.fillText('DRAG YOUR FINGER ACROSS', r.width / 2, r.height / 2 + 36);
+        c.fillText('DRAG YOUR FINGER ACROSS', r.width / 2, r.height / 2 + 36 * k);
     }, []);
 
     const pt = (e) => {

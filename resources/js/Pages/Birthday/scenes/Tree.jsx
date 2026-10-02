@@ -67,6 +67,7 @@ function useTogether(since) {
 // Scene 3 — a tree grows and blooms into a heart made of hearts.
 export default function Tree({ age, togetherSince, next }) {
     const canvasRef = useRef(null);
+    const copyRef = useRef(null);
     const [canTap, setCanTap] = useState(false);
     const together = useTogether(togetherSince);
 
@@ -88,9 +89,21 @@ export default function Tree({ age, togetherSince, next }) {
             canvas.height = h * dpr;
             const mobile = w < 768;
             const tx = mobile ? w / 2 : w * 0.6;
-            const R = mobile ? Math.min(w * 0.4, h * 0.22) : Math.min(w * 0.22, h * 0.28);
-            // Keep the top of the canopy (~1.25R above centre) on screen.
-            const cy = Math.max(R * 1.25 + (mobile ? 50 : 24), h * (mobile ? 0.28 : 0.34));
+            let R;
+            let cy;
+            if (mobile) {
+                // Phones: the text panel sits at the bottom, so fit the whole
+                // canopy (~1.36R above its centre, ~1.1R below incl. heart
+                // sprites) between the top bar and the panel.
+                const panelTop = copyRef.current ? copyRef.current.getBoundingClientRect().top : h * 0.6;
+                const space = Math.max(160, panelTop - 12 - 48);
+                R = Math.min(w * 0.4, space / 2.46);
+                cy = 48 + R * 1.36;
+            } else {
+                R = Math.min(w * 0.22, h * 0.28);
+                // Keep the top of the canopy (~1.25R above centre) on screen.
+                cy = Math.max(R * 1.25 + 24, h * 0.34);
+            }
             const top = { x: tx, y: cy + R * 0.35 };
             layout = {
                 tx, R, cy, top,
@@ -262,7 +275,7 @@ export default function Tree({ age, togetherSince, next }) {
     return (
         <div className={`bd-tree ${canTap ? 'can-tap' : ''}`} onClick={() => canTap && next()}>
             <canvas ref={canvasRef} className="bd-tree-canvas" />
-            <div className="bd-tree-copy">
+            <div className="bd-tree-copy" ref={copyRef}>
                 <h2 className="bd-tree-write" style={{ '--d': '1.2s' }}>it's officially your day</h2>
                 {together && (
                     <div className="bd-together bd-rise" style={{ '--d': '2.6s' }}>

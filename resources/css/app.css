@@ -130,6 +130,8 @@ button {
 .bd-scene {
     position: relative;
     z-index: 10;
+    /* Decorative glows may extend past the edges; never let them scroll the page sideways. */
+    overflow-x: clip;
     min-height: 100vh;
     min-height: 100svh;
     animation: bd-fade-in 0.9s ease both;
@@ -476,16 +478,20 @@ button {
         left: 12px;
         right: 12px;
         top: auto;
-        bottom: 54px;
+        bottom: 44px;
         transform: none;
         width: auto;
-        padding: 18px 18px 16px;
+        padding: 14px 14px 12px;
         text-align: center;
     }
-    .bd-tree-write { font-size: 20px; }
-    .bd-tree-age { margin-top: 14px; font-size: 17px; }
-    .bd-together { margin-top: 12px; }
-    .bd-tile-num { font-size: 20px; }
+    .bd-tree-write { font-size: 19px; }
+    .bd-tree-age { margin-top: 10px; font-size: 16px; }
+    .bd-together { margin-top: 8px; }
+    .bd-together-tiles { gap: 6px; margin-top: 6px; }
+    .bd-tile { padding: 6px 2px 5px; }
+    .bd-tile-num { font-size: 19px; }
+    .bd-together-foot { margin-top: 6px; font-size: 12.5px; }
+    .bd-tap-hint { bottom: 14px; }
 }
 
 /* ==========================================================================
@@ -515,7 +521,7 @@ button {
     position: absolute;
     left: 50%;
     top: 20px;
-    width: 360px;
+    width: min(360px, 100vw);
     height: 260px;
     transform: translateX(-50%);
     background: radial-gradient(ellipse, rgba(255, 190, 110, 0.28), transparent 65%);
@@ -669,7 +675,7 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 28px 16px 48px;
+    padding: 64px 16px 48px;
 }
 
 .bd-balloon-field {
@@ -1198,4 +1204,9 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
     .bd-blob, .bd-bokeh, .bd-env-float { animation: none; }
+}
+
+/* Phones: the letter fills the width, so the corner twinkles would sit on the text. */
+@media (max-width: 600px) {
+    .bd-letter-twinkle { display: none; }
 }

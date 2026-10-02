@@ -28,11 +28,16 @@ export default function Question({ to, question, next }) {
         e?.preventDefault?.();
         setNoTries((n) => n + 1);
         sfx.tick();
-        const pad = 90;
-        setNoPos({
-            x: pad + Math.random() * (innerWidth - pad * 2),
-            y: innerHeight * 0.45 + Math.random() * (innerHeight * 0.45 - pad),
-        });
+        // Pick a spot on screen that doesn't cover the question or YES.
+        const avoid = [...document.querySelectorAll('.pr-yes, .pr-q-text, .pr-ringbox')].map((el) => el.getBoundingClientRect());
+        const hits = (x, y) => avoid.some((r) => x > r.left - 70 && x < r.right + 70 && y > r.top - 30 && y < r.bottom + 30);
+        const padX = Math.min(90, innerWidth * 0.2);
+        let spot;
+        for (let k = 0; k < 40; k++) {
+            spot = { x: padX + Math.random() * (innerWidth - padX * 2), y: 60 + Math.random() * (innerHeight - 120) };
+            if (!hits(spot.x, spot.y)) break;
+        }
+        setNoPos(spot);
     };
 
     const yes = () => {

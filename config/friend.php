@@ -34,7 +34,7 @@ return [
         ['emoji' => '🦸', 'title' => 'The one who shows up', 'text' => 'Every single time I needed someone, you were already on your way.'],
         ['emoji' => '😂', 'title' => 'Professional idiot', 'text' => 'Nobody makes me laugh till my stomach hurts like you do.'],
         ['emoji' => '🍕', 'title' => 'Partner in crime', 'text' => 'Late-night food runs, bad plans, best memories.'],
-        ['emoji' => '🫂', 'title' => 'Basically family', 'text' => 'Friends come and go. You? You\'re stuck with me forever.'],
+        ['emoji' => '🤗', 'title' => 'Basically family', 'text' => 'Friends come and go. You? You\'re stuck with me forever.'],
     ],
 
     // Photo booth strip (relative to public/). Missing files show a fun
