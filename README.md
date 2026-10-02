@@ -44,3 +44,21 @@ A second, playful best-friend surprise lives at `/birthday/friend`
 7. Disco finale with fireworks
 
 Tip: add `?scene=<name>` to jump to a scene while editing (e.g. `?scene=chat`).
+
+## Proposal 💍
+
+`/birthday/propose` (static/GitHub Pages: `…/suprise/propose/`). Edit `config/propose.php`;
+photos go in `public/media/propose/` — `couple.jpg`, `1.jpg … 4.jpg`, `puzzle.jpg`, and
+`music.mp3` if you like.
+
+1. A hand-drawn gift → roses flood the screen
+2. "From me to you" → the love quote with highlighter swipes → a pixel heart lock
+3. Your photos land on the table
+4. The museum door — knock three times
+5. Room 1 · The Gallery — scratch the gold foil off each photo
+6. Room 2 · The Restoration Desk — fix the 3×3 photo puzzle
+7. Room 3 · The Note Wall — flip every note
+8. Room 4 · The Reading Room — break the seal, read the letter
+9. Room 5 · The Promises — tick every one
+10. Room 6 · The Last Room — the ring box and the question (the "No" button runs away)
+11. A keepsake card she can save, with fireworks

@@ -59,6 +59,33 @@ class BirthdayController extends Controller
     }
 
     /**
+     * The proposal — a "museum" of your story ending with the question,
+     * content from config/propose.php.
+     */
+    public function propose(): Response
+    {
+        $c = config('propose');
+
+        return Inertia::render('Propose/Index', [
+            'to' => $c['to'],
+            'from' => $c['from'],
+            'question' => $c['question'],
+            'music' => $this->publicUrl($c['music'] ?? null),
+            'couplePhoto' => $this->publicUrl($c['couple_photo'] ?? null),
+            'quote' => array_values($c['quote'] ?? []),
+            'gallery' => collect($c['gallery'] ?? [])->map(fn ($g) => [
+                'photo' => $this->publicUrl($g['photo'] ?? null),
+                'title' => $g['title'] ?? '',
+                'emoji' => $g['emoji'] ?? '📸',
+            ])->values(),
+            'puzzlePhoto' => $this->publicUrl($c['puzzle_photo'] ?? null),
+            'notes' => array_values($c['notes'] ?? []),
+            'letter' => trim($c['letter'] ?? ''),
+            'promises' => array_values($c['promises'] ?? []),
+        ]);
+    }
+
+    /**
      * URL for a file under public/, or null when it doesn't exist so the
      * page can fall back (synth music, placeholder polaroid, emoji sticker).
      */
