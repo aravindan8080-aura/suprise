@@ -57,7 +57,8 @@ const MELODY = [
     ['F5', 0.75], ['F5', 0.25], ['E5', 1], ['C5', 1], ['D5', 1], ['C5', 3],
     [null, 3],
 ];
-const BEAT = 0.62;
+// Seconds per beat; start() can speed it up (the friend page is bouncier).
+let BEAT = 0.62;
 
 function chimeAt(freq, t, dur, gainNode, level = 0.5) {
     const o1 = ctx.createOscillator();
@@ -101,9 +102,10 @@ function playSynthLoop() {
     schedule();
 }
 
-export function start(musicUrl) {
+export function start(musicUrl, { beat } = {}) {
     if (started) return;
     started = true;
+    if (beat) BEAT = beat;
     ensureCtx();
     if (ctx?.state === 'suspended') ctx.resume();
 

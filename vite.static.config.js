@@ -4,10 +4,24 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // Static build for GitHub Pages (see scripts/build-static.mjs). Relative
-// base so it works under user.github.io/<repo>/.
+// base so it works under user.github.io/<repo>/; two pages: the main
+// surprise and /friend/.
 export default defineConfig(() => {
-    const data = JSON.parse(readFileSync(resolve('resources/static/birthday.json'), 'utf8'));
+    const read = (p) => JSON.parse(readFileSync(resolve(p), 'utf8'));
+    const birthday = read('resources/static/birthday.json');
+    const friend = read('resources/static/friend/friend.json');
     const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
+    const meta = {
+        birthday: {
+            title: `🎁 For ${birthday.to} — a birthday surprise`,
+            desc: `${birthday.from} made something special, just for you. Open it with the sound on 🔊`,
+        },
+        friend: {
+            title: `🎉 ${friend.to}'s birthday party`,
+            desc: `You're on the VIP list! ${friend.from} made you a birthday surprise 🥳 Sound on 🔊`,
+        },
+    };
 
     return {
         root: 'resources/static',
@@ -18,15 +32,21 @@ export default defineConfig(() => {
             {
                 // Title + link-preview tags (WhatsApp reads og:*).
                 name: 'birthday-meta',
-                transformIndexHtml: (html) =>
-                    html
-                        .replaceAll('%TITLE%', esc(`🎁 For ${data.to} — a birthday surprise`))
-                        .replaceAll('%DESC%', esc(`${data.from} made something special, just for you. Open it with the sound on 🔊`)),
+                transformIndexHtml: (html, ctx) => {
+                    const m = ctx.path.includes('friend') ? meta.friend : meta.birthday;
+                    return html.replaceAll('%TITLE%', esc(m.title)).replaceAll('%DESC%', esc(m.desc));
+                },
             },
         ],
         build: {
             outDir: resolve('dist'),
             emptyOutDir: true,
+            rollupOptions: {
+                input: {
+                    main: resolve('resources/static/index.html'),
+                    friend: resolve('resources/static/friend/index.html'),
+                },
+            },
         },
     };
 });

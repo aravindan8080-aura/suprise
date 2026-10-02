@@ -98,6 +98,15 @@ function loop() {
             ctx.ellipse(-p.size * 0.45, -p.size * 0.45, p.size * 0.28, p.size * 0.16, -0.6, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
+        } else if (p.kind === 'emoji') {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.font = `${p.size}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(p.text, 0, 0);
+            ctx.restore();
         } else if (p.kind === 'spark') {
             ctx.save();
             ctx.globalCompositeOperation = 'lighter';
@@ -188,6 +197,22 @@ export function heartBurst(x, y, count = 40, power = 9) {
             vx: Math.cos(a) * v, vy: Math.sin(a) * v - 2,
             size: rand(5, 13), vr: rand(-0.1, 0.1),
             color: pick(HEART_COLORS), g: 0.1, drag: 0.97, max: rand(90, 150),
+        });
+    }
+    kick();
+}
+
+/** Emoji flying out of a point (candy from a piñata, party faces…). */
+export function emojiBurst(x, y, emojis, count = 30, power = 12) {
+    ensure();
+    for (let i = 0; i < count; i++) {
+        const a = rand(-Math.PI, 0) + rand(-0.3, 0.3);
+        const v = rand(power * 0.35, power);
+        add({
+            kind: 'emoji', text: pick(emojis), x, y,
+            vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+            size: rand(18, 34), vr: rand(-0.15, 0.15),
+            g: 0.28, drag: 0.985, max: rand(110, 170),
         });
     }
     kick();

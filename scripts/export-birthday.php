@@ -1,11 +1,17 @@
 <?php
 
-// Dumps config/birthday.php as JSON for the static (GitHub Pages) build —
-// the same props BirthdayController passes, without booting Laravel, so it
-// runs anywhere PHP does (CI included, no vendor/ needed). Media paths stay
-// relative so the page works from any sub-path (e.g. user.github.io/repo/).
+// Dumps a page's config as JSON for the static (GitHub Pages) build — the
+// same props BirthdayController passes, without booting Laravel, so it runs
+// anywhere PHP does (CI included, no vendor/ needed).
+//
+//   php scripts/export-birthday.php            → config/birthday.php
+//   php scripts/export-birthday.php friend     → config/friend.php
+//
+// Media paths stay relative; the friend page lives one folder down
+// (/friend/), so its paths get a "../" prefix.
 
 $root = dirname(__DIR__);
+$page = $argv[1] ?? 'birthday';
 
 function env($key, $default = null)
 {
@@ -14,24 +20,45 @@ function env($key, $default = null)
     return $value === false ? $default : $value;
 }
 
-$c = require $root.'/config/birthday.php';
-
-$media = function (?string $path) use ($root) {
-    return $path && is_file($root.'/public/'.$path) ? $path : null;
+$prefix = $page === 'friend' ? '../' : '';
+$media = function (?string $path) use ($root, $prefix) {
+    return $path && is_file($root.'/public/'.$path) ? $prefix.$path : null;
 };
 
-echo json_encode([
-    'to' => $c['to'],
-    'from' => $c['from'],
-    'age' => $c['age'],
-    'togetherSince' => $c['together_since'],
-    'music' => $media($c['music'] ?? null),
-    'reasons' => array_values($c['reasons'] ?? []),
-    'memories' => array_map(fn ($m) => [
-        'photo' => $media($m['photo'] ?? null),
-        'caption' => $m['caption'] ?? '',
-        'emoji' => $m['emoji'] ?? '📸',
-    ], array_values($c['memories'] ?? [])),
-    'letter' => trim($c['letter'] ?? ''),
-    'sticker' => $media($c['sticker'] ?? null),
-], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+if ($page === 'friend') {
+    $c = require $root.'/config/friend.php';
+    $data = [
+        'to' => $c['to'],
+        'from' => $c['from'],
+        'age' => $c['age'],
+        'friendsSince' => $c['friends_since'],
+        'music' => $media($c['music'] ?? null),
+        'scratch' => array_values($c['scratch'] ?? []),
+        'photos' => array_map(fn ($p) => [
+            'photo' => $media($p['photo'] ?? null),
+            'caption' => $p['caption'] ?? '',
+            'emoji' => $p['emoji'] ?? '📸',
+        ], array_values($c['photos'] ?? [])),
+        'chat' => array_values($c['chat'] ?? []),
+        'sticker' => $media($c['sticker'] ?? null),
+    ];
+} else {
+    $c = require $root.'/config/birthday.php';
+    $data = [
+        'to' => $c['to'],
+        'from' => $c['from'],
+        'age' => $c['age'],
+        'togetherSince' => $c['together_since'],
+        'music' => $media($c['music'] ?? null),
+        'reasons' => array_values($c['reasons'] ?? []),
+        'memories' => array_map(fn ($m) => [
+            'photo' => $media($m['photo'] ?? null),
+            'caption' => $m['caption'] ?? '',
+            'emoji' => $m['emoji'] ?? '📸',
+        ], array_values($c['memories'] ?? [])),
+        'letter' => trim($c['letter'] ?? ''),
+        'sticker' => $media($c['sticker'] ?? null),
+    ];
+}
+
+echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

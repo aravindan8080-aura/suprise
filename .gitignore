@@ -25,3 +25,4 @@ Homestead.yaml
 Thumbs.db
 /dist
 /resources/static/birthday.json
+/resources/static/friend/friend.json

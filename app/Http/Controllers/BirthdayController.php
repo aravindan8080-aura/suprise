@@ -34,6 +34,31 @@ class BirthdayController extends Controller
     }
 
     /**
+     * The best-friend version — same idea, playful theme, content from
+     * config/friend.php.
+     */
+    public function friend(): Response
+    {
+        $c = config('friend');
+
+        return Inertia::render('Friend/Index', [
+            'to' => $c['to'],
+            'from' => $c['from'],
+            'age' => $c['age'],
+            'friendsSince' => $c['friends_since'],
+            'music' => $this->publicUrl($c['music'] ?? null),
+            'scratch' => array_values($c['scratch'] ?? []),
+            'photos' => collect($c['photos'] ?? [])->map(fn ($p) => [
+                'photo' => $this->publicUrl($p['photo'] ?? null),
+                'caption' => $p['caption'] ?? '',
+                'emoji' => $p['emoji'] ?? '📸',
+            ])->values(),
+            'chat' => array_values($c['chat'] ?? []),
+            'sticker' => $this->publicUrl($c['sticker'] ?? null),
+        ]);
+    }
+
+    /**
      * URL for a file under public/, or null when it doesn't exist so the
      * page can fall back (synth music, placeholder polaroid, emoji sticker).
      */
