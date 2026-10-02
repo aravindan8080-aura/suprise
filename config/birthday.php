@@ -17,17 +17,17 @@
 return [
 
     // Her name, as it should appear everywhere on the page.
-    'to' => env('BIRTHDAY_TO', 'Sweetheart'),
+    'to' => env('BIRTHDAY_TO', 'Keerthi'),
 
     // Your name (shown as "… made this — just for you").
     'from' => env('BIRTHDAY_FROM', 'Aravindan'),
 
     // The age she is turning.
-    'age' => (int) env('BIRTHDAY_AGE', 26),
+    'age' => (int) env('BIRTHDAY_AGE', 25),
 
     // When you got together (YYYY-MM-DD or YYYY-MM-DD HH:MM). Drives the
     // live "together for" counter on the tree scene; null hides it.
-    'together_since' => env('BIRTHDAY_TOGETHER_SINCE', '2023-02-14'),
+    'together_since' => env('BIRTHDAY_TOGETHER_SINCE', '2020-10-26'),
 
     // Background music (relative to public/). If the file is missing, a
     // soft music-box "Happy Birthday" is played by the browser instead.
